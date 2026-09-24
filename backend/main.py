@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from backend.database import engine, Base, SessionLocal
 from backend import models, schemas
+from backend.resume import router as resume_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,12 +19,13 @@ app = FastAPI(
     title="AI Recruitment & Candidate Screening System"
 )
 
+app.include_router(resume_router)
+
 @app.get("/")
 def home():
     return {
         "message": "AI Recruitment System API is running"
     }
-
 
 @app.get("/health")
 def health_check():
