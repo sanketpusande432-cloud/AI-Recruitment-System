@@ -1,6 +1,8 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 import pymupdf
 
+from backend.extractor import extract_skills, extract_experience, extract_education
+
 router = APIRouter()
 
 @router.post("/upload-resume")
@@ -39,8 +41,14 @@ async def upload_resume(file: UploadFile = File(...)):
     finally:
         pdf.close()
 
-    # Return the extracted text
+    skills = extract_skills(extracted_text)
+    experience = extract_experience(extracted_text)
+    education = extract_education(extracted_text)
+
     return {
-        "filename": file.filename,
-        "extracted_text": extracted_text
-    }
+    "filename": file.filename,
+    "extracted_text": extracted_text,
+    "skills": skills,
+    "experience": experience,
+    "education": education
+}

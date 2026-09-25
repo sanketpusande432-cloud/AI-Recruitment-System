@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from backend.database import engine, Base, SessionLocal
 from backend import models, schemas
 from backend.resume import router as resume_router
+from backend.extractor import extract_job_skills
 
 Base.metadata.create_all(bind=engine)
 
@@ -62,4 +63,13 @@ def get_job(job_id: int, db: Session = Depends(get_db)):
     if job is None:
         return {"message": "Job not found"}
 
-    return job
+    job_skills = extract_job_skills(job.required_skills)
+
+    return {
+        "id": job.id,
+        "title": job.title,
+        "description": job.description,
+        "required_skills": job_skills,
+        "minimum_experience": job.minimum_experience
+    }
+    
