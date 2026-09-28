@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Recruitment System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>AI Recruitment & Candidate Screening System</h1>
+
+        <p class="subtitle">
+            Recruiter Dashboard
+        </p>
+
+        <div class="card">
+
+            <h2>Screen Candidate</h2>
+
+            <label for="jobId">Job ID</label>
+
+            <input
+                type="number"
+                id="jobId"
+                placeholder="Enter Job ID"
+                value="1"
+            >
+
+            <label for="resume">Upload Resume (PDF)</label>
+
+            <input
+                type="file"
+                id="resume"
+                accept=".pdf"
+            >
+
+            <button id="screenButton">
+                Screen Candidate
+            </button>
+
+            <p id="message"></p>
+
+        </div>
+
+
+        <div id="result" class="result hidden">
+
+            <h2>Screening Result</h2>
+
+            <div class="score-box">
+                <span>Suitability Score</span>
+                <h3 id="score">0</h3>
+            </div>
+
+            <p>
+                <strong>Job:</strong>
+                <span id="jobTitle"></span>
+            </p>
+
+            <p>
+                <strong>Candidate Skills:</strong>
+                <span id="candidateSkills"></span>
+            </p>
+
+            <p>
+                <strong>Matched Skills:</strong>
+                <span id="matchedSkills"></span>
+            </p>
+
+            <p>
+                <strong>Missing Skills:</strong>
+                <span id="missingSkills"></span>
+            </p>
+
+            <p>
+                <strong>Experience:</strong>
+                <span id="experience"></span>
+            </p>
+
+            <h3>Resume Evidence</h3>
+
+            <p id="evidence"></p>
+
+            <h3>AI Explanation</h3>
+
+            <p id="aiExplanation"></p>
+
+            <p>
+                <strong>Cache Status:</strong>
+                <span id="cacheStatus"></span>
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

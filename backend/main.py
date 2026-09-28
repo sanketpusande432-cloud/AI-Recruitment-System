@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 
 from backend.database import engine, Base, SessionLocal
 from backend import models, schemas
@@ -18,6 +19,14 @@ def get_db():
 
 app = FastAPI(
     title="AI Recruitment & Candidate Screening System"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(resume_router)

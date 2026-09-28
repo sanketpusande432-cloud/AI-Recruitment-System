@@ -1,12 +1,14 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from sqlalchemy.orm import Session
 import pymupdf
+import hashlib
 
 from backend.database import SessionLocal
 from backend import models
 from backend.extractor import extract_skills, extract_experience, extract_education, extract_job_skills
 from backend.matcher import match_skills, match_experience, calculate_score
 from backend.workflow import screening_workflow
+from backend.redis_client import save_screening_result, get_screening_result
 
 router = APIRouter()
 
@@ -165,6 +167,16 @@ async def ai_screen_candidate(
 
     pdf_bytes = await file.read()
 
+    resume_hash = hashlib.sha256(pdf_bytes).hexdigest()
+
+    cache_key = f"screening:{job_id}:{resume_hash}"
+
+    cached_result = get_screening_result(cache_key)
+
+    if cached_result:
+        cached_result["cache_status"] = "HIT"
+        return cached_result
+
     try:
         pdf = pymupdf.open(
             stream=pdf_bytes,
@@ -222,7 +234,7 @@ async def ai_screen_candidate(
         "answer": ""
     })
 
-    return {
+    result = {
         "job_title": job.title,
         "candidate_skills": candidate_skills,
         "required_skills": job_skills,
@@ -233,5 +245,9 @@ async def ai_screen_candidate(
         "experience_match": experience_match,
         "suitability_score": score,
         "retrieved_evidence": ai_result["evidence"],
-        "ai_explanation": ai_result["answer"]
+        "ai_explanation": ai_result["answer"],
+        "cache_status": "MISS"
     }
+    save_screening_result(cache_key, result)
+
+    return result
