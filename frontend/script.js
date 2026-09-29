@@ -29,7 +29,7 @@ screenButton.addEventListener("click", async function () {
     try {
 
         const response = await fetch(
-            `http://127.0.0.1:8000/ai-screen-candidate/${jobId}`,
+            `https://ai-recruitment-system-xruu.onrender.com/ai-screen-candidate/${jobId}`,
             {
                 method: "POST",
                 body: formData
