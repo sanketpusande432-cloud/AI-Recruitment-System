@@ -7,7 +7,7 @@ from backend.database import SessionLocal
 from backend import models
 from backend.extractor import extract_skills, extract_experience, extract_education, extract_job_skills
 from backend.matcher import match_skills, match_experience, calculate_score
-from backend.workflow import screening_workflow
+
 from backend.redis_client import save_screening_result, get_screening_result
 
 router = APIRouter()
@@ -226,7 +226,8 @@ async def ai_screen_candidate(
 
     Focus only on job-related skills and experience.
     """
-
+    from backend.workflow import screening_workflow
+    
     ai_result = screening_workflow.invoke({
         "resume_text": extracted_text,
         "question": question,
