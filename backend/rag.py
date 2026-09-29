@@ -4,12 +4,12 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from backend.llm import llm
 
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
-
 def create_vector_store(resume_text):
 
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
+    
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=300,
         chunk_overlap=50
