@@ -107,6 +107,9 @@ https://ai-recruitment-system-xruu.onrender.com/docs
 
 The backend is hosted on a free cloud instance, so the first request after inactivity may take additional time while the service starts.
 
+## GitHub Repository
+https://github.com/sanketpusande432-cloud/AI-Recruitment-System
+
 ## Retrieval and Deployment Optimization
 
 During development, the retrieval system was initially implemented using Chroma and HuggingFace embeddings.
@@ -128,7 +131,7 @@ AI-Recruitment-System/
   - rag.py
   - redis_client.py
   - resume.py
-  - schemas.py
+  - schemas.pys
   - workflow.py
 - frontend/
   - index.html
